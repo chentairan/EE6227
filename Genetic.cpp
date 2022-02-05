@@ -8,9 +8,36 @@
 Genetic::Genetic(int n, int population_size) {
   numOfQueen_ = n;
   numOfPopulation_ = population_size;
+  numOfPopulation_ = checkPopulationNum();
+
+  if (numOfQueen_ < 4 && numOfQueen_ != 1) {
+    std::cout << "Error ! The input number of Queens don't have solution\n";
+  }
+}
+
+int Genetic::checkPopulationNum() const {
+  int sum = 1;
+  bool valid = false;
+  for (int i = numOfQueen_; i > 0; --i) {
+    sum *= i;
+    if (sum >= numOfPopulation_) {
+      valid = true;
+    }
+  }
+  if (valid) {
+    return numOfPopulation_;
+  } else {
+    return sum;
+  }
 }
 
 std::vector<int> Genetic::solveGA() {
+  if (numOfQueen_ == 1) {
+    return {0};
+  } else if (numOfQueen_ < 4) {
+    return {};
+  }
+
   initializeFirstGeneration();
   for (const auto &iter: population_) {
     if (isGoalGnome(iter)) {
@@ -57,7 +84,7 @@ bool Genetic::isGoalGnome(const std::vector<int> &gnome) {
   return fitness(gnome) == 0;
 }
 
-int Genetic::fitness(const std::vector<int> &gnome) {
+int Genetic::fitness(const std::vector<int> &gnome) const {
   int conflict = 0;
   for (int i = 0; i < numOfQueen_; ++i) {
     for (int j = i + 1; j < numOfQueen_; ++j) {
@@ -80,7 +107,7 @@ void Genetic::crossOverAndMutant() {
   }
 }
 
-void Genetic::crossOverGnomes(std::vector<int> &firstGnome, std::vector<int> &secondGnome) {
+void Genetic::crossOverGnomes(std::vector<int> &firstGnome, std::vector<int> &secondGnome) const {
   int tmp;
   for (int i = 1; i < numOfQueen_; ++i) {
     if (std::abs(firstGnome[i - 1] - firstGnome[i]) < 2) {

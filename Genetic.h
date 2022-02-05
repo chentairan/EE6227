@@ -12,12 +12,13 @@ class Genetic {
   std::vector<int> createGnome();
   void initializeFirstGeneration();
   bool isGoalGnome(const std::vector<int> &gnome);
-  int fitness(const std::vector<int> &gnome);
+  int fitness(const std::vector<int> &gnome) const;
   void crossOverAndMutant();
-  void crossOverGnomes(std::vector<int> &firstGnome, std::vector<int> &secondGnome);
+  void crossOverGnomes(std::vector<int> &firstGnome, std::vector<int> &secondGnome) const;
   void MutantGnome(std::vector<int> &gnome);
   std::vector<std::vector<int>> makeSelection();
-  int randomNum(int start, int end);
+  static int randomNum(int start, int end);
+  int checkPopulationNum() const;
 
  private:
   std::vector<std::vector<int>> population_;

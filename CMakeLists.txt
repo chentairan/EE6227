@@ -4,3 +4,5 @@ project(GA3)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(GA3 main.cpp Genetic.cpp)
+
+add_executable(GA3_benchmark benchmark.cpp Genetic.cpp)

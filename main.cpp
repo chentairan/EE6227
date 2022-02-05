@@ -13,7 +13,11 @@ int main() {
   std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
 
   std::cout << "Solving time cost: " << std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1).count();
-  std::cout << "\nSolution: \n";
+  if (solution.empty()) {
+    std::cout << "\nError\n";
+  } else {
+    std::cout << "\nSolution: \n";
+  }
   for (const auto &iter: solution) {
     std::cout << iter << " ";
   }
