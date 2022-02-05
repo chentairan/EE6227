@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Genetic.h"
+#include <chrono>
 
 int main() {
   int n;

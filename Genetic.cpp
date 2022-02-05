@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
+#include <chrono>
 
 Genetic::Genetic(int n, int population_size) {
   numOfQueen_ = n;
@@ -39,6 +40,7 @@ std::vector<int> Genetic::createGnome() {
   std::shuffle(new_gnome.begin(), new_gnome.end(), std::default_random_engine(seed));
 
   while (std::find(population_.begin(), population_.end(), new_gnome) != population_.end()) {
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::shuffle(new_gnome.begin(), new_gnome.end(), std::default_random_engine(seed));
   }
 
