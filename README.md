@@ -60,6 +60,10 @@ make
 ./GA3
 ```
 
+The following images show the results of the run:
+
+![](demo.jpg)
+
 ## 2. Benchmark
 
 I tested the results when **the number of queens is 4 to 200.** **The results of the test are saved to `result.txt`.**
