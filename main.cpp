@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Genetic.h"
 #include <chrono>
-#include <stdlib.h>
 
 int main() {
   int n;
@@ -23,6 +22,5 @@ int main() {
     std::cout << iter << " ";
   }
   std::cout << "\n";
-  system("pause");
   return 0;
 }
