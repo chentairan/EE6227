@@ -5,8 +5,12 @@
 
 class Genetic {
  public:
-  Genetic(int n, int population_size);
+  Genetic(int n, int population_size, int migration_size);
   std::vector<int> solveGA();
+  bool oneStep();
+  std::vector<std::vector<int>> randomGetGnome();
+  void setNewGnome(const std::vector<std::vector<int>>& newGnomes);
+  std::vector<int> getSolution();
 
  private:
   std::vector<int> createGnome();
@@ -24,8 +28,10 @@ class Genetic {
   std::vector<std::vector<int>> population_;
   int numOfQueen_;
   int numOfPopulation_;
+  int numOfMigration_;
   std::vector<int> solution_;
   int solutionIndex_ = -1;
+  int iter_cnt_ = 0;
 };
 
 #endif // GENETIC_H_

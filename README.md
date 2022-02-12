@@ -1,8 +1,4 @@
-# EE6227 Assignment 3
-
-Name: Chen Tairan
-
-If you have any issue about the code running, do contact me: tchen008@e.ntu.edu.sg
+# EE6227 Assignment 4
 
 ## 1. Requirements
 
@@ -16,15 +12,15 @@ In the `bin` directory there are my pre-compiled executable files, you can selec
 
 #### Windows
 
-Double-click the `GA3_Windows.exe` file
+Double-click the `GA4_island_Windows.exe` file
 
 #### macOS / Ubuntu
 
 Open a terminal in the `bin` directory
 
 ```bash
-./GA3_macOS	# if you use intel-based Mac
-./GA3_Ubuntu	# if you use Ubuntu
+./GA4_island_macOS	# if you use intel-based Mac
+./GA4_island_Ubuntu	# if you use Ubuntu
 ```
 
 **Note: These binaries are only valid for testing in my environment, if they fail to run, please build from source code !!!**
@@ -36,8 +32,8 @@ Open a terminal in the `bin` directory
 #### Windows
 
 ```bash
-g++ main.cpp Genetic.cpp -o GA3 -std=c++11 -static
-.\GA3.exe
+g++ islandGA.cpp Genetic.cpp -o GA4_island -std=c++11 -static
+.\GA4_island.exe
 ```
 
 #### macOS / Ubuntu
@@ -45,8 +41,8 @@ g++ main.cpp Genetic.cpp -o GA3 -std=c++11 -static
 **Option1: Using g++ compiler**
 
 ```bash
-g++ main.cpp Genetic.cpp -o GA3 -std=c++11
-./GA3
+g++ islandGA.cpp Genetic.cpp -o GA4_island -std=c++11
+./GA4_island
 ```
 
 **Option2: Using cmake & make**
@@ -57,44 +53,32 @@ mkdir build
 cd build
 cmake ..
 make
-./GA3
+./GA4_island
 ```
 
 The following images show the results of the run:
 
-![](demo.jpg)
+![](resource/islandGA30.jpg)
 
-## 2. Benchmark
+## 2. Compare islandGA with Normal GA
 
-I tested the results when **the number of queens is 4 to 200.** **The results of the test are saved to `result.txt`.**
+I compare island GA with normal GA. For the normal GA, the time taken to solve for an n=30 solution is 0.31344s. And the time taken for island GA to solve for **island=10, n=30 is 2.83562s, averaging 0.283s per solution**. The island method speeds up the solver.
 
-I also give the evaluation code `benchmark.cpp` to reproduce the results of this algorithm.
+I also test the case when **n=100**. **Island GA takes 108.712s (averaging 10.8712s per solution)**, and **normal GA takes 12s.** The island method also shows an acceleration effect. The following figures show the results of the two GA algorithms respectively.
 
-**Note that: If you just want to see the final result, you can check the `result.txt` file directly.**
+![](resource/normalGA100.jpg)
 
-```bash
-# Evaluation Code build from source, option1, if you use g++
-g++ benchmark.cpp Genetic.cpp -o GA3_benchmark -std=c++11
-./GA3_benchmark	# if Windows, .\GA3_benchmark.exe
+![](resource/islandGA100.jpg)
 
-# Evaluation Code build from source, option2, if you use cmake & make
-mkdir build
-cd build
-cmake ..
-make
-./GA3_benchmark # if Windows, .\GA3_benchmark.exe
-```
+## 3. Island GA implementation
 
-This code will run for a long time because it tries a number of 4 to 200 different queens. After the run is complete, the results will be saved to the `result.txt` file.
+The algorithm is implemented as follows:
 
-## 3. Algorithm description
+- Firstly, **k** GA solvers are constructed, and they are randomly initialized. 
 
-To make the algorithm run faster and reduce unnecessary gene generation, I introduced the domain knowledge about the N-Queen problem. I will present my improvements in the **Crossover** and **Mutation** section.
+- Based on the iterations of the original GA, **m** chromosomes are randomly selected from the solver every **t** iterations and put into the next solver.
 
-### a. Crossover
+- Stop iterating when all solvers have found a solution
 
-The algorithm checks whether the adjacent elements in the chromosome differ by only 1, because if the difference is 1, then the two Queens will be checked. So the algorithm swap the elements of the chromosome in this position to break the check.
+Implementation details can be found in `islandGA.cpp` and `Genetic.cpp`
 
-### b. Mutation
-
-The algorithm first de-duplicates the elements in the chromosome, and then completes the missing elements, after which the pair of element positions are randomly exchanged.

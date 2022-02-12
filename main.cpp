@@ -6,7 +6,7 @@ int main() {
   int n;
   std::cout << "Input number of queens: ";
   std::cin >> n;
-  Genetic genetic(n, 100);
+  Genetic genetic(n, 100 ,25);
 
   std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
   auto solution = genetic.solveGA();
